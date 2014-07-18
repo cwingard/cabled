@@ -1,0 +1,172 @@
+
+>
+>PS0
+  Instrument S/N:  18444
+       Frequency:  76800 HZ
+   Configuration:  4 BEAM, JANUS
+     Match Layer:  10
+      Beam Angle:  20 DEGREES
+    Beam Pattern:  CONVEX 
+     Orientation:  UP  
+       Sensor(s):  HEADING  TILT 1  TILT 2  DEPTH  TEMPERATURE  PRESSURE
+Pressure Sens Coefficients:
+              c3 = -1.927850E-11
+              c2 = +1.281892E-06
+              c1 = +1.375793E+00
+          Offset = +1.338634E+01
+
+Temp Sens Offset:  -0.01 degrees C
+
+    CPU Firmware:  50.40 [0]
+   Boot Code Ver:  Required:  1.16   Actual:  1.16
+    DEMOD #1 Ver:  ad48, Type:  1f
+    DEMOD #2 Ver:  ad48, Type:  1f
+    PWRTIMG  Ver:  85d3, Type:   7
+
+Board Serial Number Data:
+   72  00 00 06 FE BC D8  09 HPA727-3009-00B 
+   81  00 00 06 F5 CD 9E  09 REC727-1004-06A
+   A5  00 00 06 FF 1C 79  09 HPI727-3007-00A
+   82  00 00 06 FF 23 E5  09 CPU727-2011-00E
+   07  00 00 06 F6 05 15  09 TUN727-1005-06A
+   DB  00 00 06 F5 CB 5D  09 DSP727-2001-06H
+>AC
+
+              ACTIVE FLUXGATE CALIBRATION MATRICES in NVRAM
+               Calibration date and time: 9/14/2012  09:25:32
+                             S inverse
+          Ú                                                  ¿
+     Bx   ³   3.9218e-01  3.9660e-01 -3.1681e-02  6.4332e-03 ³
+     By   ³  -2.4320e-02 -1.0376e-02 -2.2428e-03 -6.0628e-01 ³
+     Bz   ³   2.2453e-01 -2.1972e-01 -2.7990e-01 -2.4339e-03 ³
+     Err  ³   4.6514e-01 -4.0455e-01  6.9083e-01 -1.4291e-02 ³
+          À                                                  Ù
+                             Coil Offset
+                         Ú                ¿
+                         ³   3.4233e+04   ³
+                         ³   3.4449e+04   ³
+                         ³   3.4389e+04   ³
+                         ³   3.4698e+04   ³
+                         À                Ù
+                             Electrical Null
+                              Ú       ¿
+                              ³ 34285 ³
+                              À       Ù
+                    TILT CALIBRATION MATRICES in NVRAM
+                Calibration date and time: 9/14/2012  09:14:45
+              Average Temperature During Calibration was   24.4 øC
+
+                   Up                              Down
+
+        Ú                           ¿     Ú                           ¿
+ Roll   ³   7.4612e-07  -3.1727e-05 ³     ³  -3.0054e-07   3.2190e-05 ³
+ Pitch  ³  -3.1639e-05  -6.3505e-07 ³     ³  -3.1965e-05  -1.4881e-07 ³
+        À                           Ù     À                           Ù
+
+        Ú                           ¿     Ú                           ¿
+ Offset ³   3.2808e+04   3.2568e+04 ³     ³   3.2279e+04   3.3047e+04 ³
+        À                           Ù     À                           Ù
+
+                             Ú       ¿
+                      Null   ³ 33500 ³
+                             À       Ù
+
+
+
+
+
+>FD
+Total Unique Faults   =     1
+Overflow Count        =     0
+Time of first fault:    14/07/08,00:46:35.28
+Time of last fault:     14/07/08,00:46:36.96
+
+Fault Log:
+Entry #  0 Code=0801h  Count=    2  Delta=  168 Time=14/07/08,00:46:36.96
+ Parameter = 00000001h
+  Timeout waiting for empty output buffer
+End of fault log.
+
+>PT200
+
+  Ambient  Temperature =    21.11 Degrees C
+  Attitude Temperature =    24.01 Degrees C
+  Internal Moisture    = 8E90h
+
+Correlation Magnitude: Wide Bandwidth
+
+               Lag  Bm1  Bm2  Bm3  Bm4
+                 0  255  255  255  255
+                 1  153  153  148  150
+                 2    3    7    9   11
+                 3   38   41   53   33
+                 4   36   40   41   19
+                 5   22   26   33    9
+                 6   13   11   21   13
+                 7   14   13   11   16
+
+  High Gain RSSI:    26   30   35   31
+   Low Gain RSSI:     6    6    9    8
+
+  SIN Duty Cycle:    48   49   47   48
+  COS Duty Cycle:    47   48   49   48
+
+Receive Test Results = $00000000 ... PASS
+
+IXMT    =      7.3 Amps rms  [Data=a6h]
+VXMT    =    397.6 Volts rms [Data=beh]
+   Z    =     54.6 Ohms
+Transmit Test Results = $0 ... PASS
+
+    0    0    0    0
+    0    0    0    0
+    0    0    0    0
+    0    0    0    0
+  255  255  255  255
+    0    0    0    0
+    0    0    0    0
+  255  255  255  255
+    0    0    0    0
+    0    0    0    0
+    0    0    0    0
+  255  255  255  255
+Electronics Test Results = $00000000
+Receive Bandwidth:
+    Sample      bw    bw    bw    bw    bw
+      rate  expect   Bm1   Bm2   Bm3   Bm4
+        77      25    23    22    21    25 Khz
+   results          PASS  PASS  PASS  PASS
+RSSI Time Constant:
+
+RSSI Filter Strobe 1 =   38400 Hz
+  time   Bm1   Bm2   Bm3   Bm4
+  msec  cnts  cnts  cnts  cnts
+     1     5     7     6     6
+     2     9    14    11    12
+     3    13    18    15    17
+     4    16    23    19    21
+     5    18    26    22    25
+     6    20    29    25    28
+     7    23    31    27    30
+     8    24    33    29    32
+     9    26    34    31    34
+    10    27    36    32    35
+   nom    34    43    41    43
+result    PASS  PASS  PASS  PASS
+>
+>
+>CR1
+[Parameters set to FACTORY defaults]
+>TT2014/07/08,17:40:46
+>
+>CF11110
+>CL0
+>ED8000
+>EX00111
+>TE00:00:00.00
+>TP00:00.00
+>WN30
+>WP1
+>WS3200
+>
+>
