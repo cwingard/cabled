@@ -13,7 +13,7 @@ import os
 import socket
 import sys
 from threading import Thread
-from time import gmtime, strftime, struct_time
+from time import gmtime, sleep, strftime, struct_time
 
 
 class Logger(object):
@@ -83,7 +83,7 @@ class Logger(object):
 class Recv(Thread):
     # Establishes the receiving thread and file handling
     def __init__(self, conn, basename, increment):
-        Recv.__init__(self, name='Recv')
+        Thread.__init__(self, name='Recv')
         self.myFileHandler = Logger(basename, increment)
         self._conn = conn
         self._last_line = ''
@@ -105,23 +105,17 @@ class Recv(Thread):
     def run(self):
         print '### Receiver running.'
         while True:
+            # read data from the socket at 1 Hz
+            recv = self._conn.recv(min(self.msglen, 1024))
+            if recv == '':
+                raise RuntimeError("socket connection broken")
 
-            # read data from the socket in N byte chunks
-            chunks = []
-            bytes_recd = 0
-            while bytes_recd < self.msglen:
-                chunk = self._conn.recv(min(self.msglen - bytes_recd, 1024))
-                if chunk == '':
-                    raise RuntimeError("socket connection broken")
-                chunks.append(chunk)
-                bytes_recd = bytes_recd + len(chunk)
-
-            recv = ''.join(chunks)
             self.update_lines(recv)
-
             self.myFileHandler.write(self._last_line)
-            os.write(sys.stdout.fileno(), recv)
+            #os.write(sys.stdout.fileno(), recv)
+            sys.stdout.write('#\t--- Received and saved %d bytes\n' % len(recv))
             sys.stdout.flush()
+            sleep(1)
 
 
 class Direct(object):

@@ -22,7 +22,7 @@ from base.command import main
 # definition to include a scheduler for sending the pump (R1) and sample
 # processing (R0) commands to the SAMI2-pCO2.
 class _Direct(Direct):
-    
+
     def run(self):
         while True:
             # parse the user commands from stdin
@@ -37,6 +37,8 @@ class _Direct(Direct):
                 print '### sending %s' % cmd
                 self.send(cmd)
                 self.send('\r\n')
+
+            # 
 
 if __name__ == '__main__':
     # parse the command line arguments
