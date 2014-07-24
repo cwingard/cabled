@@ -72,6 +72,10 @@ class _Direct(Direct):
                 print '#\t--- turning off 1 Hz status messages'
                 self.send('F5A\r')
                 sleep(1)
+                self.send('F5A\r')
+                sleep(1)
+                self.send('F5A\r')
+                sleep(1)
                 print '#\t--- cycle external pump 3 times to clear potential air bubbles'
                 self.send('R1\r')
                 sleep(15)

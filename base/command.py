@@ -36,7 +36,8 @@ def main():
     parser.add_argument("-a",  "--address", dest="address",
                         default="localhost", type=str,
                         help="set the IP address of the host the instrument is attached to")
-    parser.add_argument("-p", "--port", dest="port", type=int,
+    parser.add_argument("-p", "--port", dest="port",
+                        default=2101, type=int,
                         help="set the IP port number on the host to which the instrument is attached")
     parser.add_argument("-b", "--base", dest="basename",
                         default="INSTNAME_IPADDR_PORT", type=str,

@@ -66,6 +66,10 @@ class _Direct(Direct):
                 print '#\t--- turning off 1 Hz status messages'
                 self.send('F5A\r')
                 sleep(1)
+                self.send('F5A\r')
+                sleep(1)
+                self.send('F5A\r')
+                sleep(1)
                 print '#\t--- flush internal pump 2 times with reagent'
                 self.send('P2\r')
                 sleep(2)
