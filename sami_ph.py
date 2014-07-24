@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-@package sami_pco2
-@file sami_pco2.py
+@package sami_ph
+@file sami_ph.py
 @author Christopher Wingard
 @brief Utilizes base classes from logger.py to create a custom scheduled logger
-    for the Sunburst Sensors, SAMI2-pCO2 (PCO2W)
+    for the Sunburst Sensors, SAMI2-ph (PHSEN)
 '''
 __author__ = 'Christopher Wingard'
 __license__ = 'Apache 2.0'
@@ -19,8 +19,8 @@ from base.command import main
 
 
 # Create a subclass of the Direct class from base/logger.py extending the run
-# definition to include a scheduler for sending the pump (R1) and sample
-# processing (R0) commands to the SAMI2-pCO2.
+# definition to include a scheduler for sending the sample processing (R0)
+# command to the SAMI2-pH.
 class _Direct(Direct):
 
     # set initial conditions for the subclass (in addition to the superclass
@@ -32,13 +32,8 @@ class _Direct(Direct):
 
     def collect_sample(self):
         time_value = gmtime()
-        self.send('R1\r')
-        print '#\t--- Collecting Sample at %.3f' % mktime(time_value)
-
-    def process_sample(self):
-        time_value = gmtime()
         self.send('R0\r')
-        print '#\t--- Processing Sample at %.3f' % mktime(time_value)
+        print '#\t--- Collecting Sample at %.3f' % mktime(time_value)
 
     def query_status(self):
         time_value = gmtime()
@@ -57,7 +52,6 @@ class _Direct(Direct):
                 if self.sampling is True:
                     print '#\t--- stop all scheduled sampling'
                     self.scheduler.unschedule_job(self.sample)
-                    self.scheduler.unschedule_job(self.process)
                     self.scheduler.unschedule_job(self.status)
                     self.scheduler.shutdown()
 
@@ -72,33 +66,18 @@ class _Direct(Direct):
                 print '#\t--- turning off 1 Hz status messages'
                 self.send('F5A\r')
                 sleep(1)
-                print '#\t--- cycle external pump 3 times to clear potential air bubbles'
-                self.send('R1\r')
-                sleep(15)
-                print '#\t\t--- * first cycle complete'
-                self.send('R1\r')
-                sleep(15)
-                print '#\t\t--- * second cycle complete'
-                self.send('R1\r')
-                sleep(15)
-                print '#\t\t--- * third cycle complete'
                 print '#\t--- flush internal pump 2 times with reagent'
                 self.send('P2\r')
                 sleep(2)
                 print '#\t\t--- * first cycle complete'
                 self.send('P2\r')
                 sleep(2)
-                print '#\t\t--- * second cycle complete'
-                print '#\t--- taking a blank measurement (this takes 120 seconds to complete)'
-                self.send('C\r')
-                sleep(120)
-                print '#\t--- blank measurement completed, ready for sampling'
+                print '#\t\t--- * second cycle complete, ready for sampling'
 
             elif cmd == 'start':
-                print '### sampling started, will sample hourly at the top of the hour'
+                print '### sampling started, will sample every hour at the top of the hour'
                 self.scheduler.start()
                 self.sample = self.scheduler.add_cron_job(self.collect_sample, minute=0)
-                self.process = self.scheduler.add_cron_job(self.process_sample, minute=5)
                 self.status = self.scheduler.add_cron_job(self.query_status, hour='0,12', minute=15)
                 #self.scheduler.print_jobs()
                 self.sampling = True
@@ -106,7 +85,6 @@ class _Direct(Direct):
             elif cmd == 'stop':
                 print '### sampling stopped'
                 self.scheduler.unschedule_job(self.sample)
-                self.scheduler.unschedule_job(self.process)
                 self.scheduler.unschedule_job(self.status)
                 self.scheduler.shutdown()
                 self.sampling = False

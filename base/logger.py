@@ -13,7 +13,7 @@ import os
 import socket
 import sys
 from threading import Thread
-from time import gmtime, sleep, strftime, struct_time
+from time import gmtime, mktime, sleep, strftime, struct_time
 
 
 class Logger(object):
@@ -60,7 +60,7 @@ class Logger(object):
 
         if self.increment == 'hourly':
             # check if the hour of the day has changed or if this is the first
-            # time we've run this (e.g. hourOfDay == 0)
+            # time we've run this (e.g. hourOfDay == -1)
             if self.hourOfDay != struct_time(time_value).tm_hour:
                 # create a new filename string
                 self.fileName = self.basename + '_' + time_string
@@ -70,7 +70,7 @@ class Logger(object):
 
         if self.increment == 'daily':
             # check if the day of month has changed or if this is the first
-            # time we've run this (e.g. dayOfMonth == 0)
+            # time we've run this (e.g. dayOfMonth == -1)
             if self.dayOfMonth != struct_time(time_value).tm_mday:
                 # create a new filename string
                 self.fileName = self.basename + '_' + time_string
@@ -122,6 +122,7 @@ class Direct(object):
     # Establishes the connection and starts the receiving thread.
     def __init__(self, host, port, basename, increment):
         print '### connecting to %s:%s' % (host, port)
+        self.myFileHandler = Logger(basename, increment)
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._sock.connect((host, port))
         self._bt = Recv(self._sock, basename, increment)
@@ -140,8 +141,7 @@ class Direct(object):
                 break
             else:
                 print '### sending %s' % cmd
-                self.send(cmd)
-                self.send('\r\n')
+                self.send(cmd + '\r')
 
         # exit the application
         self.stop()
@@ -152,5 +152,8 @@ class Direct(object):
 
     # Sends a string. Returns the number of bytes written.
     def send(self, s):
+        time_value = gmtime()
         c = os.write(self._sock.fileno(), s)
+        cmd_str = '#### at %.3f, sending %s' % (mktime(time_value), s)
+        self.myFileHandler.write(cmd_str)
         return c
